@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import HeroSection from "@/components/HeroSection";
 import BenefitsSection from "@/components/BenefitsSection";
-import LeadForm from "@/components/LeadForm";
+import BuilderWidget from "@/components/BuilderWidget";
 import Footer from "@/components/Footer";
 
 const Index = () => {
@@ -16,7 +16,7 @@ const Index = () => {
       <HeroSection onCtaClick={scrollToForm} />
       <BenefitsSection />
       <div ref={formRef}>
-        <LeadForm id="lead-form" />
+        <BuilderWidget />
       </div>
       <Footer />
     </main>
