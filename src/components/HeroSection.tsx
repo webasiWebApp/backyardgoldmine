@@ -1,14 +1,43 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Plane } from "lucide-react";
 import heroImage from "@/assets/hero-casita.jpg";
+import { useEffect } from "react";
+
+declare global {
+  namespace JSX {
+    interface IntrinsicElements {
+      'the-builder-map-page': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+      'the-builder-search-field': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement>;
+    }
+  }
+}
 
 interface HeroSectionProps {
   onCtaClick: () => void;
 }
 
 const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
+  useEffect(() => {
+    // Load the map page script
+    const mapScript = document.createElement('script');
+    mapScript.src = "https://assets.thebuilder.ai/fc71d69e4c03506e4e592a83067c5145/embedded/TheBuilderMapPage.js";
+    mapScript.type = "module";
+    document.body.appendChild(mapScript);
+
+    // Load the search field script
+    const searchScript = document.createElement('script');
+    searchScript.src = "https://assets.thebuilder.ai/fc71d69e4c03506e4e592a83067c5145/embedded/TheBuilderSearchField.js";
+    searchScript.type = "module";
+    document.body.appendChild(searchScript);
+
+    return () => {
+      document.body.removeChild(mapScript);
+      document.body.removeChild(searchScript);
+    };
+  }, []);
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex flex-col overflow-hidden">
       {/* Background Image */}
       <div 
         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -18,7 +47,7 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-4 py-20">
+      <div className="relative z-10 container mx-auto px-4 py-12 flex-shrink-0">
         <div className="max-w-2xl">
           {/* Badge */}
           <div className="inline-flex items-center gap-2 bg-gold/20 backdrop-blur-sm border border-gold/30 rounded-full px-4 py-2 mb-6 animate-fade-up">
@@ -42,20 +71,8 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
             Fully installed from <span className="font-bold text-gold">$110,000</span> (after $40,000 rebate).
           </p>
 
-          {/* CTA Button */}
-          <div className="animate-fade-up" style={{ animationDelay: "0.3s" }}>
-            <Button 
-              onClick={onCtaClick}
-              size="lg"
-              className="group bg-gold hover:bg-gold-dark text-navy font-bold text-lg px-8 py-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 animate-pulse-glow"
-            >
-              See If Your Home Qualifies
-              <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-            </Button>
-          </div>
-
           {/* Trust indicators */}
-          <div className="flex flex-wrap gap-4 mt-8 animate-fade-up" style={{ animationDelay: "0.4s" }}>
+          <div className="flex flex-wrap gap-4 animate-fade-up" style={{ animationDelay: "0.3s" }}>
             <div className="flex items-center gap-2 text-primary-foreground/70">
               <div className="w-2 h-2 rounded-full bg-green-400" />
               <span className="text-sm">County-Approved ADUs</span>
@@ -72,12 +89,26 @@ const HeroSection = ({ onCtaClick }: HeroSectionProps) => {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
-        <div className="w-6 h-10 rounded-full border-2 border-primary-foreground/30 flex justify-center pt-2">
-          <div className="w-1.5 h-3 rounded-full bg-gold animate-pulse" />
+      {/* Builder Widget - Search and Map */}
+      <div className="relative z-10 flex-1 w-full px-4 pb-4 animate-fade-up" style={{ animationDelay: "0.4s" }}>
+        <div className="container mx-auto h-full flex flex-col">
+          <div className="text-center mb-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-primary-foreground mb-2">
+              See If Your Home Qualifies
+            </h2>
+            <p className="text-primary-foreground/70">
+              Enter your address to check eligibility and claim your FREE trip!
+            </p>
+          </div>
+          <div className="max-w-2xl mx-auto w-full mb-4">
+            <the-builder-search-field></the-builder-search-field>
+          </div>
+          <div className="flex-1 min-h-[400px] rounded-xl overflow-hidden shadow-lg">
+            <the-builder-map-page style={{ display: 'block', width: '100%', height: '100%' }}></the-builder-map-page>
+          </div>
         </div>
       </div>
+
     </section>
   );
 };
