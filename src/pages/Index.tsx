@@ -1,23 +1,17 @@
-import { useRef } from "react";
 import HeroSection from "@/components/HeroSection";
 import BenefitsSection from "@/components/BenefitsSection";
-import BuilderWidget from "@/components/BuilderWidget";
 import Footer from "@/components/Footer";
 
 const Index = () => {
-  const formRef = useRef<HTMLDivElement>(null);
-
-  const scrollToForm = () => {
-    formRef.current?.scrollIntoView({ behavior: "smooth" });
+  const scrollToWidget = () => {
+    // Scroll to the widget section within the hero
+    document.querySelector('the-builder-search-field')?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
     <main className="min-h-screen">
-      <HeroSection onCtaClick={scrollToForm} />
+      <HeroSection onCtaClick={scrollToWidget} />
       <BenefitsSection />
-      <div ref={formRef}>
-        <BuilderWidget />
-      </div>
       <Footer />
     </main>
   );
