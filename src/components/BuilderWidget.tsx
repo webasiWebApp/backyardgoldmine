@@ -13,13 +13,13 @@ const BuilderWidget = () => {
   useEffect(() => {
     // Load the map page script
     const mapScript = document.createElement('script');
-    mapScript.src = "https://assets.thebuilder.ai/f23c1358c25412264ca709819d88940d/embedded/TheBuilderMapPage.js";
+    mapScript.src = "https://assets.thebuilder.ai/fc71d69e4c03506e4e592a83067c5145/embedded/TheBuilderMapPage.js";
     mapScript.type = "module";
     document.body.appendChild(mapScript);
 
     // Load the search field script
     const searchScript = document.createElement('script');
-    searchScript.src = "https://assets.thebuilder.ai/f23c1358c25412264ca709819d88940d/embedded/TheBuilderSearchField.js";
+    searchScript.src = "https://assets.thebuilder.ai/fc71d69e4c03506e4e592a83067c5145/embedded/TheBuilderSearchField.js";
     searchScript.type = "module";
     document.body.appendChild(searchScript);
 
